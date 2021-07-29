@@ -33,9 +33,9 @@ def run_excel_macro(open_path, excel_name, excel_scenario, mod1, macro1, mod2=0,
     if os.path.exists(f_):
         xl=win32com.client.Dispatch("Excel.Application")
         wb = xl.Workbooks.Open(os.path.abspath(f_), ReadOnly=0)
-        xl.Application.Run("{}!{}.{}".format(excel_name, mod1, macro1))
+        xl.Application.Run("{}!{}.{}".format(excel_name, mod1, macro1), excel_scenario)
         if mod2 != 0 and macro2 != 0:
-            xl.Application.Run("{}!{}.{}".format(excel_name, mod2, macro2), excel_scenario)
+            xl.Application.Run("{}!{}.{}".format(excel_name, mod2, macro2))
         if mod3 != 0 and macro3 != 0:
             xl.Application.Run("{}!{}.{}".format(excel_name, mod3, macro3))
         if mod4 != 0 and macro4 != 0:

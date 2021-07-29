@@ -11,14 +11,14 @@ from vissim_run_functions import *
 # =============================================================================
 # INPUT: Indicate versions to run for each scenario:
 # =============================================================================
-l_s01 = ['v0'] # 1-2024 No-Build AM
-l_s02 = [] # 1-2024 No-Build PM
-l_s03 = [] # 2-2024 Build Refined F1 AM
-l_s04 = [] # 2-2024 Build Refined F1 PM
-l_s05 = [] # 3-2024 Build Beautiful Blvd AM
-l_s06 = [] # 3-2024 Build Beautiful Blvd PM
-l_s07 = [] 
-l_s08 = [] 
+l_s01 = ['v0'] # 1-Existing AM
+l_s02 = [] # 1-Existing PM
+l_s03 = [] # 2-No-Build AM
+l_s04 = [] # 2-No-Build PM
+l_s05 = [] # 3-Build 1 AM
+l_s06 = [] # 3-Build 1 PM
+l_s07 = [] # 4-Build 2 AM
+l_s08 = [] # 4-Build 2 PM
 l_s09 = [] 
 l_s10 = [] 
 l_s11 = [] 
@@ -35,7 +35,8 @@ l_s20 = []
 # =============================================================================
 # INPUT: Adjust these True/False variables based on what needs to be run
 # =============================================================================
-define_run = 3 # 1 - run everything, 2 - process moe's
+define_run = input("USER INPUT - Define Run Type: 1 (Run Vissim), 2 (Just MOEs), 3 (Testing):  ")
+#define_run = 3 # 1 - run everything, 2 - process moe's, 3 - testing
 
 if define_run == 1:
     run_vissim = True
@@ -65,8 +66,13 @@ elif define_run == 3:  #Testing
 # PROJECT SPECIFIC INPUTS
 # =============================================================================
  
+project_name = 'Project'  # Shortened Name used for filenaming
+
+# File paths and file names ===================================================
+open_path_start = r'C:\Users\britton.hammit\Documents\Python\VISSIM-File-Structure'
+
 # Simulation parameters =======================================================
-no_runs = 2  # Number of Random Seeds
+no_runs = 10  # Number of Random Seeds
 vissim_version = "Vissim.Vissim-64.1100"  # Using 11.00-14, Last updated 2019-11-19 (Most recent update at start of project)
 sim_run_time = 2400  # Seeding, Peak Hour, Shoulder
 random_seed_start = 100
@@ -108,8 +114,8 @@ TT_ylim = 600
 #!!!Set Transit settings manually in Vissim
 
 # Layout file =================================================================
-layout_fn ='Outputs_MasterLayout_NHTP'  # Loads as model is running
-layout_fn_post = 'Outputs_MasterLayout_NHTP_Post'  # Loads after runs are complete
+layout_fn ='Outputs_MasterLayout'  # Loads as model is running
+layout_fn_post = 'Outputs_MasterLayout_Post'  # Loads after runs are complete
 
 
 # -----------------------------------------------------------------------
@@ -134,52 +140,52 @@ for key, value in d_scenarios.items(): # Looping through each scenario
             # fn_start: Key word for naming of the MOE sheet (replaces the "empty")
                 
             if key == 'l_s01':
-                p_scenario = '1-2024 No-Build' # string of path name for this scenario
-                fn_scenario = "2024NB" # string of file name for this scenario
+                p_scenario = '1-Existing' # string of path name for this scenario
+                fn_scenario = "Existing" # string of file name for this scenario
                 peak_pd = 'AM' # String of peak period for this scenario
-                excel_scenario = "2024 No-Build AM"
+                excel_scenario = "Existing AM"
                 
             if key == 'l_s02':
-                p_scenario = '1-2024 No-Build' # string of path name for this scenario
-                fn_scenario = "2024NB" # string of file name for this scenario
+                p_scenario = '1-Existing' # string of path name for this scenario
+                fn_scenario = "Existing" # string of file name for this scenario
                 peak_pd = 'PM' # String of peak period for this scenario
-                excel_scenario = "2024 No-Build PM"
+                excel_scenario = "Existing PM"
                 
             if key == 'l_s03':
-                p_scenario = '2-2024 Build Refined F1' # string of path name for this scenario
-                fn_scenario = "2024Build1" # string of file name for this scenario
+                p_scenario = '2-XXXX No-Build' # string of path name for this scenario
+                fn_scenario = "XXXXNo-Build" # string of file name for this scenario
                 peak_pd = 'AM' # String of peak period for this scenario
-                excel_scenario = "2024 Build 1 AM"
+                excel_scenario = "XXXX No-Build PM"
                 
             if key == 'l_s04':
-                p_scenario = '2-2024 Build Refined F1' # string of path name for this scenario
-                fn_scenario = "2024Build1" # string of file name for this scenario
+                p_scenario = '2-XXXX No-Build' # string of path name for this scenario
+                fn_scenario = "XXXXNo-Build" # string of file name for this scenario
                 peak_pd = 'PM' # String of peak period for this scenario
-                excel_scenario = "2024 Build 1 PM"
+                excel_scenario = "XXXX No-Build PM"
                 
             if key == 'l_s05':
-                p_scenario = '3-2024 Build Beautiful Blvd' # string of path name for this scenario
-                fn_scenario = "2024Build2" # string of file name for this scenario
+                p_scenario = '3-XXXX Build1' # string of path name for this scenario
+                fn_scenario = "XXXXBuild1" # string of file name for this scenario
                 peak_pd = 'AM' # String of peak period for this scenario
-                excel_scenario = "2024 Build 2 AM"
+                excel_scenario = "XXXX Build1 AM"
                 
             if key == 'l_s06':
-                p_scenario = '3-2024 Build Beautiful Blvd' # string of path name for this scenario
-                fn_scenario = "2024Build2" # string of file name for this scenario
+                p_scenario = '3-XXXX Build1' # string of path name for this scenario
+                fn_scenario = "XXXXBuild1" # string of file name for this scenario
                 peak_pd = 'PM' # String of peak period for this scenario
-                excel_scenario = "2024 Build 2 PM"
+                excel_scenario = "XXXX Build1 PM"
                 
             if key == 'l_s07':
-                p_scenario = '' # string of path name for this scenario
-                fn_scenario = "" # string of file name for this scenario
-                peak_pd = '' # String of peak period for this scenario
-                excel_scenario = ""
+                p_scenario = '3-XXXX Build2' # string of path name for this scenario
+                fn_scenario = "XXXXBuild2" # string of file name for this scenario
+                peak_pd = 'AM' # String of peak period for this scenario
+                excel_scenario = "XXXX Build2 AM"
                 
             if key == 'l_s08':
-                p_scenario = '' # string of path name for this scenario
-                fn_scenario = "" # string of file name for this scenario
-                peak_pd = '' # String of peak period for this scenario
-                excel_scenario = ""
+                p_scenario = '3-XXXX Build2' # string of path name for this scenario
+                fn_scenario = "XXXXBuild2" # string of file name for this scenario
+                peak_pd = 'PM' # String of peak period for this scenario
+                excel_scenario = "XXXX Build2 PM"
                 
             if key == 'l_s09':
                 p_scenario = '' # string of path name for this scenario
@@ -263,16 +269,15 @@ for key, value in d_scenarios.items(): # Looping through each scenario
                 link_collection_setup = link_collection_setup_PM
             
             # Creating paths and filenames from scenario inputs & Running model
-            fn_start = 'NHTP_{}_{}_'.format(fn_scenario, peak_pd)
+            fn_start = '{}_{}_{}_'.format(project_name,fn_scenario, peak_pd)
             
-            # File paths and file names ===================================================
-            open_path = r'C:\Users\britton.hammit\OneDrive - KH\Projects\0-Gobys&Tools\Python\NHTP_Vissim\{}\{}\04-Working_Models'.format(p_scenario, peak_pd)
-            save_path_start = r'C:\Users\britton.hammit\OneDrive - KH\Projects\0-Gobys&Tools\Python\NHTP_Vissim\{}\{}\05-Outputs'.format(p_scenario, peak_pd)
+            open_path = r'{}\{}\{}\01-Working_Models'.format(open_path_start,p_scenario, peak_pd)
+            save_path_start = r'{}\{}\{}\02-Outputs'.format(open_path_start,p_scenario, peak_pd)
             
-            moe_spreadsheet_fn = 'NHTP_MOE_template.xlsm'
-            moe_spreadsheet_path = r'"C:\Users\britton.hammit\OneDrive - KH\Projects\0-Gobys&Tools\Python\NHTP_Vissim\_MOE Spreadsheet"'
-            layout_path = moe_spreadsheet_path
-            #transit_data_path = r'K:\NVA_RDWY\110721000_Route1_Multimodal\Production\Task 2 - Mulitmodal Transportation Analysis\04-Vissim\08-Transit'
+            moe_spreadsheet_fn = '{}_MOE_template.xlsm'.format(project_name)
+            moe_spreadsheet_path = r'{}\_MOE Spreadsheet'.format(open_path_start)
+            layout_path = r'{}\_Layout Files'.format(open_path_start)
+            #transit_data_path = r'{}\_Transit'.format(open_path_start)
         
             # Call function to run Vissim for each specified scenario/version
             RunVissim(fn_scenario,
