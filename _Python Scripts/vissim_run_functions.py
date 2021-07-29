@@ -34,6 +34,10 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
         save_path = save_path_start + '\{}'.format(fn_end)
         if not os.path.exists(save_path):
             os.makedirs(save_path)
+        else:
+            overwrite_file = input("Output folder {} already exists - do you want to overwrite it?  (Y/N):  ".format(fn))
+            if overwrite_file == "N":  # End script if you don't want to overwrite the folder.
+                SystemExit()
     
         # Copy RBC files and Vehicle files to Output path/Running Path
         for f_ in os.listdir(open_path):
@@ -139,9 +143,8 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
         try: 
             # Execute Macro to Clear all results, Toggle between AM and PM, then Process new .ATT results
             run_excel_macro(open_path=save_path, excel_name=moe_spreadsheet_fn_new, excel_scenario=excel_scenario,
-                            mod1="Main", macro1="Clear_Results_Refresh_Pivots",
-                            mod2="Main", macro2="Change_Links_Python",
-                            mod3="Main", macro3="Import_Results_Auto")
+                            mod1="Main", macro1="Change_Links_Python",
+                            mod2="Main", macro2="Import_Results_Auto")
         except:
             print("     *Error Running MOE Sheet Macro")
     
