@@ -6,3 +6,7 @@ It is HIGHLY recommended to run your Vissim models for MOEs using the python scr
 ---------------------------------------------------------------------------------------------------
 Getting Started:
 * Begin setting up this spreadsheet by filling out each of the orange INPUT tabs.
+
+
+---------------------------------------------------------------------------------------------------
+It is best practice to save an archived version of your MOE sheet each time you make a large change - note the name of the "template" or master file MUST stay the same. 
