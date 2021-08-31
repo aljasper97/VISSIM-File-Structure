@@ -1,0 +1,3 @@
+This folder contains the files referenced by the MOE sheet for reading in transit travel times by transit line or dwell times by stop.
+
+First, the Project_PT_Line and _Stop.csv files should be completed, then a template form should be generated to match the example from the SanPabloAve_transit_template.xlsx using the Python script. Once this is complete, the _MOE template should be set up to reference the empty transit file as a baseline to switch links each time it runs.
