@@ -11,7 +11,7 @@ from vissim_run_functions import *
 # =============================================================================
 # INPUT: Indicate versions to run for each scenario:
 # =============================================================================
-l_s01 = ['v0'] # 1-Existing AM
+l_s01 = [] # 1-Existing AM
 l_s02 = [] # 1-Existing PM
 l_s03 = [] # 2-No-Build AM
 l_s04 = [] # 2-No-Build PM
@@ -35,7 +35,7 @@ l_s20 = []
 # =============================================================================
 # INPUT: Adjust these True/False variables based on what needs to be run
 # =============================================================================
-define_run = input("USER INPUT - Define Run Type: 1 (Run Vissim), 2 (Just MOEs), 3 (Testing):  ")
+define_run = int(input("USER INPUT - Define Run Type: 1 (Run Vissim), 2 (Just MOEs), 3 (Testing):  "))
 #define_run = 3 # 1 - run everything, 2 - process moe's, 3 - testing
 
 if define_run == 1:
@@ -55,12 +55,12 @@ elif define_run == 2:  # Change in MOE Sheet Update in Outputs
     run_excel_macros = True
 
 elif define_run == 3:  #Testing
-    run_vissim = True
+    run_vissim = False
     copy_moe_sheet = True
     transit_veh_records = False
-    travel_time_plots = True
-    clean_output_files = True
-    run_excel_macros = False
+    clean_output_files = False
+    travel_time_plots = False
+    run_excel_macros = True
 
 # =============================================================================
 # PROJECT SPECIFIC INPUTS
@@ -69,12 +69,12 @@ elif define_run == 3:  #Testing
 project_name = 'Project'  # Shortened Name used for filenaming
 
 # File paths and file names ===================================================
-open_path_start = r'C:\Users\britton.hammit\Documents\Python\VISSIM-File-Structure'
+open_path_start = r'K:\NVA_TPTO\San Pablo Avenue\Vissim'  # Path to Vissim Folder downloaded from GitHub
 
 # Simulation parameters =======================================================
 no_runs = 10  # Number of Random Seeds
 vissim_version = "Vissim.Vissim-64.1100"  # Using 11.00-14, Last updated 2019-11-19 (Most recent update at start of project)
-sim_run_time = 2400  # Seeding, Peak Hour, Shoulder
+sim_run_time = 9000  # Seeding, Peak Hour, Shoulder
 random_seed_start = 100
 random_seed_increment = 1
 
@@ -89,18 +89,18 @@ data_collection_active = False
 data_collection_setup = [0,99999,99999] # from time, to time, interval
 
 node_collection_active = True
-node_collection_setup_AM = [1800,5400,3600] # from time, to time, interval
-node_collection_setup_PM = [1800,5400,3600]
+node_collection_setup_AM = [1800,9000,7200] # from time, to time, interval
+node_collection_setup_PM = [1800,9000,7200]
 
 travel_time_collection_active = True
-travel_time_collection_setup = [0,7200,900] # from time, to time, interval
+travel_time_collection_setup = [0,9000,900] # from time, to time, interval
 
 veh_net_performance_active = True
-veh_net_performance_setup = [0,7200,7200] 
+veh_net_performance_setup = [1800,9000,7200] 
 
-link_collection_active = False
-link_collection_setup_AM = [0,99999,99999] # from time, to time, interval
-link_collection_setup_PM = [0,99999,99999]
+link_collection_active = True  # Keep true to get speed heat maps
+link_collection_setup_AM = [1800,9000,7200] # from time, to time, interval
+link_collection_setup_PM = [1800,9000,7200]
 
 queue_collection_active = False  # Queue Counters
 queue_collection_setup = [0,99999,99999] # from time, to time, interval
@@ -155,7 +155,7 @@ for key, value in d_scenarios.items(): # Looping through each scenario
                 p_scenario = '2-XXXX No-Build' # string of path name for this scenario
                 fn_scenario = "XXXXNo-Build" # string of file name for this scenario
                 peak_pd = 'AM' # String of peak period for this scenario
-                excel_scenario = "XXXX No-Build PM"
+                excel_scenario = "XXXX No-Build AM"
                 
             if key == 'l_s04':
                 p_scenario = '2-XXXX No-Build' # string of path name for this scenario
@@ -176,13 +176,13 @@ for key, value in d_scenarios.items(): # Looping through each scenario
                 excel_scenario = "XXXX Build1 PM"
                 
             if key == 'l_s07':
-                p_scenario = '3-XXXX Build2' # string of path name for this scenario
+                p_scenario = '4-XXXX Build2' # string of path name for this scenario
                 fn_scenario = "XXXXBuild2" # string of file name for this scenario
                 peak_pd = 'AM' # String of peak period for this scenario
                 excel_scenario = "XXXX Build2 AM"
                 
             if key == 'l_s08':
-                p_scenario = '3-XXXX Build2' # string of path name for this scenario
+                p_scenario = '4-XXXX Build2' # string of path name for this scenario
                 fn_scenario = "XXXXBuild2" # string of file name for this scenario
                 peak_pd = 'PM' # String of peak period for this scenario
                 excel_scenario = "XXXX Build2 PM"
@@ -277,7 +277,7 @@ for key, value in d_scenarios.items(): # Looping through each scenario
             moe_spreadsheet_fn = '{}_MOE_template.xlsm'.format(project_name)
             moe_spreadsheet_path = r'{}\_MOE Spreadsheet'.format(open_path_start)
             layout_path = r'{}\_Layout Files'.format(open_path_start)
-            #transit_data_path = r'{}\_Transit'.format(open_path_start)
+            transit_data_path = r'{}\_Transit'.format(open_path_start)
         
             # Call function to run Vissim for each specified scenario/version
             RunVissim(fn_scenario,
@@ -317,6 +317,8 @@ for key, value in d_scenarios.items(): # Looping through each scenario
                       save_path_start,
                       moe_spreadsheet_fn,
                       moe_spreadsheet_path,
-                      layout_path)
+                      layout_path,
+                      project_name,
+                      transit_data_path)
         
 

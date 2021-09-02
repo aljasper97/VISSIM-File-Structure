@@ -19,7 +19,7 @@ import pandas as pd
 import os, glob
 
 
-def Transit_Data_Processing(version,save_path,file_name_start,transit_data_path):
+def Transit_Data_Processing(version,save_path,file_name_start,transit_data_path,project_name="project_name"):
     
     # Save Results
     writer = pd.ExcelWriter(os.path.join(save_path,"{}_transit.xlsx".format(file_name_start).replace(".fzp","")), engine='xlsxwriter')
@@ -49,8 +49,8 @@ def Transit_Data_Processing(version,save_path,file_name_start,transit_data_path)
         
         # Read in Key Data for each stop and line
         
-        fn_pt_lines = "Route1_PT_Line_Name.csv"
-        fn_pt_stops = "Route1_PT_Stop_Name.csv"
+        fn_pt_lines = "{}_PT_Line_Name.csv".format(project_name)
+        fn_pt_stops = "{}_PT_Stop_Name.csv".format(project_name)
         
         df_lines = pd.read_csv(filepath_or_buffer=os.path.join(transit_data_path,fn_pt_lines),delimiter=",",index_col=0,header=0,dtype={"PTLINE":float})
         df_stops = pd.read_csv(filepath_or_buffer=os.path.join(transit_data_path,fn_pt_stops),delimiter=",",index_col=0,header=0,dtype={"PTSTOP":float})

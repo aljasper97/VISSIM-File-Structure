@@ -13,7 +13,7 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
                   node_collection_setup, travel_time_collection_active, travel_time_collection_setup, veh_net_performance_active,
                   veh_net_performance_setup, link_collection_active, link_collection_setup, queue_collection_active,
                   queue_collection_setup, TT_ylim, layout_fn, layout_fn_post, open_path, save_path_start, moe_spreadsheet_fn,
-                  moe_spreadsheet_path, layout_path):
+                  moe_spreadsheet_path, layout_path, project_name,transit_data_path):
 
            
     # =============================================================================
@@ -126,7 +126,8 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
     # Process Transit Data
     if transit_veh_records is True:
         print ("Process Transit Data - Produce Summary Spreadsheet")
-        try: Transit_Data_Processing(version=fn_end, save_path=save_path, file_name_start=fn, transit_data_path=transit_data_path)
+        try: Transit_Data_Processing(version=fn_end, save_path=save_path, file_name_start=fn, 
+                                     transit_data_path=transit_data_path, project_name = project_name)
         except:
             print("     *Error Reporting Transit Data")
     
