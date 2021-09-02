@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jun  9 11:20:59 2020
+Kimley-Horn
+@authors: Britton Hammit
+
+Extracts transit records from FZP files
+* Produces summary table of transit travel time by route
+* Produces summary table of transit dwell time by stop
 
 Instructions for setting up Vissim
 * Evaluation / Direct Output / Vehicle record 
@@ -12,7 +17,7 @@ Instructions for setting up Vissim
 * The header variable in the df_data read-in line will need to be updated accordingly.
 * Change evaluation path
 
-@author: britton.hammit
+Last Update: 9/2/2021, Britton Hammit
 """
 
 import pandas as pd

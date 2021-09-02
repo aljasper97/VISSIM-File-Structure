@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct 29 14:05:29 2020
+Kimley-Horn
+@authors: Britton Hammit, Ilana Sadholz, Alex Jasper
 
-@author: Britton.Hammit
+Organizes ATT files produced from Vissim into specific folders
+* Up to 10 runs
+
+Last Update: 9/2/2021, Britton Hammit
 """
 
 import os, glob, shutil, time

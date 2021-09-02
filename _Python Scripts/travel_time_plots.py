@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 29 19:40:07 2020
+Kimley-Horn
+@authors: Britton Hammit
 
-@author: Britton.Hammit
+Produces travel time plots
+* For all travel time segments in the Vissim model, TT plots are created
+* These are an incredibly valuable tool for debugging
+
+Debugging:
+* Make sure the name of the travel time segment in Vissim does not contain "-" or ":"
+* There is a y-axis limit in the "main.py" file if part of plots are cut off.
+
+Last Update: 9/2/2021, Britton Hammit
 """
 
 import os, glob

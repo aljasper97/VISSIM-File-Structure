@@ -1,3 +1,11 @@
+"""
+Kimley-Horn
+@authors: Britton Hammit, Ilana Sadholz
+
+Underlying functions for running Vissim in Python
+
+Last Update: 9/2/2021, Britton Hammit
+"""
 
 from vissim_simulation_classes import Vissim_Network
 from travel_time_plots import *

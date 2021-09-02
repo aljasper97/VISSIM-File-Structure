@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 17 13:07:44 2021
+Kimley-Horn
+@authors: Britton Hammit, Ilana Sadholz, Alex Jasper
 
-@author: Ilana.Sadholz
+Vissim Model Running and Processing Script
+* Run Vissim model from python script
+* Extracts transit records from FZP files
+* Produces travel time plots
+* Auto generates ATT files & auto processes them using the corresponding MOE sheet
+
+Last Update: 9/2/2021, Britton Hammit
 """
 
 from vissim_run_functions import *

@@ -1,27 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Oct 31 07:26:15 2020
+Kimley-Horn
+@authors: Britton Hammit, Ilana Sadholz, Alex Jasper
 
-@author: Britton.Hammit
-"""
+Processes Excel Macros - This use case is for the corresponding MOE Sheet
+* Can be used for other purposes.
 
-"""
-From Internet!
-if os.path.exists("excelsheet.xlsm"):
-    xl=win32com.client.Dispatch("Excel.Application")
-    xl.Workbooks.Open(os.path.abspath("excelsheet.xlsm"), ReadOnly=1)
-    xl.Application.Run("excelsheet.xlsm!modulename.macroname")
-##    xl.Application.Save() # if you want to save then uncomment this line and change delete the ", ReadOnly=1" part from the open function.
-    xl.Application.Quit() # Comment this out if your excel script closes
-    del xl
-    
-if os.path.exists("excelsheet.xlsm"):
-    xl=win32com.client.Dispatch("Excel.Application")
-    wb = xl.Workbooks.Open(os.path.abspath("excelsheet.xlsm"), ReadOnly=1) #create a workbook object
-    xl.Application.Run("excelsheet.xlsm!modulename.macroname")
-    wb.Close(False) #close the work sheet object rather than quitting excel
-    del wb
-    del xl
+Last Update: 9/2/2021, Britton Hammit
 """
 
 import os

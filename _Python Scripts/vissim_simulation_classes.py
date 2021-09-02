@@ -1,3 +1,12 @@
+"""
+Kimley-Horn
+@authors: Britton Hammit, Ilana Sadholz
+
+Underlying functions for running Vissim in Python
+
+Last Update: 9/2/2021, Britton Hammit
+"""
+
 import numpy as np
 from math import sqrt
 import win32com.client as com  # COM-Server
