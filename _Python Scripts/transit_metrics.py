@@ -49,7 +49,7 @@ def Transit_Data_Processing(version,save_path,file_name_start,transit_data_path,
                else:
                     i+=1
         # Open file based on identified header row i
-        df_data = pd.read_csv(filepath_or_buffer=input_file,delimiter=";",header = i, dtype = {"PTSTOP":float,"PTLINE":float})
+        df_data = pd.read_csv(filepath_or_buffer=input_file,delimiter=";",header = i, dtype = {"PTSTOP":float,"PTLINE":float},encoding='windows-1252')
         del i
         
         # Read in Key Data for each stop and line
@@ -108,13 +108,13 @@ def Transit_Data_Processing(version,save_path,file_name_start,transit_data_path,
 
 
 def main():
-    version = "v20"
-    peak_pd = "02-AM"
+    version = "v23"
+    peak_pd = "AM"
     #peak_pd = "04-PM"
-    save_path = r'K:\NVA_RDWY\110721000_Route1_Multimodal\Production\Task 2 - Mulitmodal Transportation Analysis\04-Vissim\01-Existing\{}\03-Outputs\{}'.format(peak_pd, version)
-    transit_data_path = r'K:\NVA_RDWY\110721000_Route1_Multimodal\Production\Task 2 - Mulitmodal Transportation Analysis\04-Vissim\08-Transit'
+    save_path = r'K:\NVA_Vissim\Route_1\Vissim\01-Existing\{}\02-Outputs\{}'.format(peak_pd, version)
+    transit_data_path = r'K:\NVA_Vissim\Route_1\Vissim\08-Transit'
     file_name_start = 'Route1_Existing_AM_{}'.format(version)
-    Transit_Data_Processing(version,save_path,file_name_start,transit_data_path)
+    Transit_Data_Processing(version,save_path,file_name_start,transit_data_path,'Route1')
 
 if __name__ == "__main__":
     main()

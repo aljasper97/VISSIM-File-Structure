@@ -121,30 +121,34 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
             
             # Copy New File
             shutil.copyfile(src=moe_spreadsheet_path+'\{}'.format(moe_spreadsheet_fn),dst=save_path+'\{}'.format(moe_spreadsheet_fn_new))
-        except:
+        except Exception as e:
             print("     *Error Copying Out MOE Sheet")
+            print(f"    Exception: {e}")
     
     # Clean .ATT Files (only keep the last)
     if clean_output_files is True:
         print ("Clean up folder to remove unnecessary .ATT files")
         try: Clean_Output_Files(results_path=save_path, no_seeds=no_runs)
-        except:
+        except Exception as e:
             print("     *Error Cleaning .ATT Output Files")
+            print(f"    Exception: {e}")
             
     # Process Transit Data
     if transit_veh_records is True:
         print ("Process Transit Data - Produce Summary Spreadsheet")
         try: Transit_Data_Processing(version=fn_end, save_path=save_path, file_name_start=fn, 
                                      transit_data_path=transit_data_path, project_name = project_name)
-        except:
+        except Exception as e:
             print("     *Error Reporting Transit Data")
+            print(f"    Exception: {e}")
     
     # Process Travel Time Data
     if travel_time_plots is True:
         print ("Process Travel Time Data - Produce Travel Time Plots")
         try: Travel_Time_Plots(TT_ylim, results_path=save_path)
-        except:
+        except Exception as e:
             print("     *Error Reporting Travel Time Plots")
+            print(f"    Exception: {e}")
 
     # Run MOE Sheet Macros
     if run_excel_macros is True:
@@ -153,9 +157,11 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
             # Execute Macro to Clear all results, Toggle between AM and PM, then Process new .ATT results
             run_excel_macro(open_path=save_path, excel_name=moe_spreadsheet_fn_new, excel_scenario=excel_scenario,
                             mod1="Main", macro1="Change_Links_Python",
-                            mod2="Main", macro2="Import_Results_Auto")
-        except:
+                            mod2="Main", macro2="Clear_Results_Refresh",
+                            mod3="Main", macro3="Import_Results_Auto")
+        except Exception as e:
             print("     *Error Running MOE Sheet Macro")
+            print(f"    Exception: {e}")
     
     total_time = (time.time()-start_time)/60
     print ("Finished - {} min".format(round(total_time,1)))
