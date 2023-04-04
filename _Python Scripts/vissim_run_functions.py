@@ -20,7 +20,7 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
                   keep_prev_results, veh_class_recording, data_collection_active, data_collection_setup, node_collection_active, 
                   node_collection_setup, travel_time_collection_active, travel_time_collection_setup, veh_net_performance_active,
                   veh_net_performance_setup, link_collection_active, link_collection_setup, queue_collection_active,
-                  queue_collection_setup, TT_ylim, layout_fn, layout_fn_post, open_path, save_path_start, moe_spreadsheet_fn,
+                  queue_collection_setup, TT_ylim, layout_fn, layout_fn_post, open_path, save_path_start,
                   moe_spreadsheet_path, layout_path, project_name,transit_data_path):
 
            
@@ -110,17 +110,19 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
     # Copy empty MOE spreadsheet to save path
     if copy_moe_sheet is True:
         try:
-            print ("Copying MOE Spreadsheet into Path")
-            moe_spreadsheet_fn_new = moe_spreadsheet_fn.replace('template',"{}_{}_{}".format(fn_scenario,peak_pd,fn_end))
+            print ("Copying MOE Spreadsheet(s) into Path")
+            l_moe_sheets = glob.glob(os.path.join(moe_spreadsheet_path,'*template*.xlsm'))  # Will copy all macro-enabled files with "template" in the name
             
-            # Check if sheet exists in folder and if it does, rename it before copying
-            if os.path.exists(save_path+'\{}'.format(moe_spreadsheet_fn_new)):
-                if not os.path.exists(save_path+'\!Archive'):
-                    os.makedirs(save_path+'\!Archive')
-                shutil.copyfile(src=save_path+'\{}'.format(moe_spreadsheet_fn_new),dst=save_path+'\!Archive'+'\{}_{}'.format(time.strftime("%Y-%m-%d_%H-%M"),moe_spreadsheet_fn_new))
-            
-            # Copy New File
-            shutil.copyfile(src=moe_spreadsheet_path+'\{}'.format(moe_spreadsheet_fn),dst=save_path+'\{}'.format(moe_spreadsheet_fn_new))
+            for moe_sheet in l_moe_sheets:
+                moe_sheet_fn_new = moe_sheet.replace('template',"{}_{}_{}".format(fn_scenario,peak_pd,fn_end))
+                # Check if sheet exists in folder and if it does, rename it before copying
+                if os.path.exists(save_path+'\{}'.format(moe_sheet)):
+                    if not os.path.exists(save_path+'\!Archive'):
+                        os.makedirs(save_path+'\!Archive')
+                    shutil.copyfile(src=save_path+'\{}'.format(moe_sheet),dst=save_path+'\!Archive'+'\{}_{}'.format(time.strftime("%Y-%m-%d_%H-%M"),moe_sheet))
+                
+                # Copy New File
+                shutil.copyfile(src=moe_spreadsheet_path+'\{}'.format(moe_sheet),dst=save_path+'\{}'.format(moe_sheet_fn_new))
         except Exception as e:
             print("     *Error Copying Out MOE Sheet")
             print(f"    Exception: {e}")
@@ -154,11 +156,13 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
     if run_excel_macros is True:
         print ("Run MOE Sheet Macros to Process Results")
         try: 
-            # Execute Macro to Clear all results, Toggle between AM and PM, then Process new .ATT results
-            run_excel_macro(open_path=save_path, excel_name=moe_spreadsheet_fn_new, excel_scenario=excel_scenario,
-                            mod1="Main", macro1="Change_Links_Python",
-                            mod2="Main", macro2="Clear_Results_Refresh",
-                            mod3="Main", macro3="Import_Results_Auto")
+            l_moe_sheets = glob.glob(os.path.join(save_path,'*.xlsm'))
+            for moe_sheet in l_moe_sheets:
+                # Execute Macro to Clear all results, Toggle between AM and PM, then Process new .ATT results
+                run_excel_macro(open_path=save_path, excel_name=moe_sheet, excel_scenario=excel_scenario,
+                                mod1="Main", macro1="Change_Links_Python",
+                                mod2="Main", macro2="Clear_Results_Refresh",
+                                mod3="Main", macro3="Import_Results_Auto")
         except Exception as e:
             print("     *Error Running MOE Sheet Macro")
             print(f"    Exception: {e}")

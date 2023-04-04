@@ -281,7 +281,6 @@ for key, value in d_scenarios.items(): # Looping through each scenario
             open_path = r'{}\{}\{}\01-Working_Models'.format(open_path_start,p_scenario, peak_pd)
             save_path_start = r'{}\{}\{}\02-Outputs'.format(open_path_start,p_scenario, peak_pd)
             
-            moe_spreadsheet_fn = '{}_MOE_template.xlsm'.format(project_name)
             moe_spreadsheet_path = r'{}\_MOE Spreadsheet'.format(open_path_start)
             layout_path = r'{}\_Layout Files'.format(open_path_start)
             transit_data_path = r'{}\_Transit'.format(open_path_start)
@@ -322,7 +321,6 @@ for key, value in d_scenarios.items(): # Looping through each scenario
                       layout_fn_post,
                       open_path,
                       save_path_start,
-                      moe_spreadsheet_fn,
                       moe_spreadsheet_path,
                       layout_path,
                       project_name,
