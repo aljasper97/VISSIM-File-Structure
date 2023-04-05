@@ -1,6 +1,5 @@
 """
-Kimley-Horn
-@authors: Britton Hammit, Ilana Sadholz
+@authors: Britton Hammit
 
 Underlying functions for running Vissim in Python
 
