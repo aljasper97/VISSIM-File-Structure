@@ -114,15 +114,16 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
             l_moe_sheets = glob.glob(os.path.join(moe_spreadsheet_path,'*template*.xlsm'))  # Will copy all macro-enabled files with "template" in the name
             
             for moe_sheet in l_moe_sheets:
-                moe_sheet_fn_new = moe_sheet.replace('template',"{}_{}_{}".format(fn_scenario,peak_pd,fn_end))
+                moe_sheet_fn = os.path.basename(moe_sheet)
+                moe_sheet_fn_new = moe_sheet_fn.replace('template',"{}_{}_{}".format(fn_scenario,peak_pd,fn_end))
                 # Check if sheet exists in folder and if it does, rename it before copying
-                if os.path.exists(save_path+'\{}'.format(moe_sheet)):
+                if os.path.exists(save_path+'\{}'.format(moe_sheet_fn_new)):
                     if not os.path.exists(save_path+'\!Archive'):
                         os.makedirs(save_path+'\!Archive')
-                    shutil.copyfile(src=save_path+'\{}'.format(moe_sheet),dst=save_path+'\!Archive'+'\{}_{}'.format(time.strftime("%Y-%m-%d_%H-%M"),moe_sheet))
+                    shutil.copyfile(src=save_path+'\{}'.format(moe_sheet_fn_new),dst=save_path+'\!Archive'+'\{}_{}'.format(time.strftime("%Y-%m-%d_%H-%M"),moe_sheet_fn_new))
                 
                 # Copy New File
-                shutil.copyfile(src=moe_spreadsheet_path+'\{}'.format(moe_sheet),dst=save_path+'\{}'.format(moe_sheet_fn_new))
+                shutil.copyfile(src=moe_spreadsheet_path+'\{}'.format(moe_sheet_fn),dst=save_path+'\{}'.format(moe_sheet_fn_new))
         except Exception as e:
             print("     *Error Copying Out MOE Sheet")
             print(f"    Exception: {e}")
@@ -158,8 +159,9 @@ def RunVissim(fn_scenario, peak_pd, excel_scenario, fn_start, fn_end, run_vissim
         try: 
             l_moe_sheets = glob.glob(os.path.join(save_path,'*.xlsm'))
             for moe_sheet in l_moe_sheets:
+                moe_sheet_fn = os.path.basename(moe_sheet)
                 # Execute Macro to Clear all results, Toggle between AM and PM, then Process new .ATT results
-                run_excel_macro(open_path=save_path, excel_name=moe_sheet, excel_scenario=excel_scenario,
+                run_excel_macro(open_path=save_path, excel_name=moe_sheet_fn, excel_scenario=excel_scenario,
                                 mod1="Main", macro1="Change_Links_Python",
                                 mod2="Main", macro2="Clear_Results_Refresh",
                                 mod3="Main", macro3="Import_Results_Auto")

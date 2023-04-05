@@ -18,7 +18,7 @@ from vissim_run_functions import *
 # =============================================================================
 # INPUT: Indicate versions to run for each scenario:
 # =============================================================================
-l_s01 = [] # 1-Existing AM
+l_s01 = ['v1'] # 1-Existing AM
 l_s02 = [] # 1-Existing PM
 l_s03 = [] # 2-No-Build AM
 l_s04 = [] # 2-No-Build PM
@@ -59,7 +59,7 @@ elif define_run == 2:  # Change in MOE Sheet Update in Outputs
     transit_veh_records = False
     travel_time_plots = False
     clean_output_files = False
-    run_excel_macros = True
+    run_excel_macros = False
 
 elif define_run == 3:  #Testing
     run_vissim = False
@@ -76,7 +76,7 @@ elif define_run == 3:  #Testing
 project_name = 'Project'  # Shortened Name used for filenaming
 
 # File paths and file names ===================================================
-open_path_start = r'K:\NVA_TPTO\San Pablo Avenue\Vissim'  # Path to Vissim Folder downloaded from GitHub
+open_path_start = r'K:\NVA_Vissim\Portsmouth_IAR'  # Path to Vissim Folder downloaded from GitHub
 
 # Simulation parameters =======================================================
 no_runs = 10  # Number of Random Seeds
