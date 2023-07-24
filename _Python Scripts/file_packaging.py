@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
-This is a temporary script file.
+VISSIM file packaging script
+Created by: Amy Tibbetts 3/1/2023
 """
 
 import os
@@ -10,25 +9,31 @@ import shutil
 
 # Inputs
 source_dir = r'\\nvafiler01\Project03\AT_NVA\Data\NVA_Vissim\Project_XXX'
-PM = True
+PM = False
 AM = False
-my_dict = {'1-Existing' : 'v0',
-           '2-20XX No-Build' : 'v0',
-           '3-20XX Build' : 'v0',
+my_dict_AM = {
+           '3-2050 No-Build' : 'v22',
+           '5-2050 Build Alt 1' : 'v25',
+           '6-2050 Build Alt 2' : 'v22'
+           }
+my_dict_PM = {
+           '3-2050 No-Build' : 'v27',
+           '5-2050 Build Alt 1' : 'v18',
+           '6-2050 Build Alt 2' : 'v10'
            }
 l_filetypes = ['.inpx','.rbc'] # options: '.inpx' '.rbc' '.err'
 
 # Processing starts here
-for folder, version in my_dict.items():
+if AM == True:
     
-    file_path_am =  source_dir + '\\' + folder + '\\AM\\02-Outputs\\' + version
-    file_path_pm =  source_dir + '\\' + folder + '\\PM\\02-Outputs\\' + version
-    to_dir_am = rf'{source_dir}\_Submittals\{folder}\AM'
-    to_dir_pm = rf'{source_dir}\_Submittals\{folder}\PM'
-    if os.path.exists(rf'{source_dir}\_Submittals\{folder}'):
-        shutil.rmtree(rf'{source_dir}\_Submittals\{folder}') 
+    for folder, version in my_dict_AM.items():
     
-    if AM == True:
+        file_path_am =  source_dir + '\\' + folder + '\\AM\\02-Outputs\\' + version
+        to_dir_am = rf'{source_dir}\_Submittals\{folder}\AM'
+
+        if os.path.exists(rf'{source_dir}\_Submittals\{folder}\AM'):
+            shutil.rmtree(rf'{source_dir}\_Submittals\{folder}\AM') 
+
         for file in os.listdir(file_path_am):
             os.makedirs(to_dir_am, exist_ok=True) 
             
@@ -51,7 +56,16 @@ for folder, version in my_dict.items():
                     shutil.copy(os.path.join(file_path_am,file), os.path.join(to_dir_am, file))
                     print('INFO - Copied', file)
                 
-    if PM == True:
+if PM == True:
+    
+    for folder, version in my_dict_PM.items():
+
+        file_path_pm =  source_dir + '\\' + folder + '\\PM\\02-Outputs\\' + version
+        to_dir_pm = rf'{source_dir}\_Submittals\{folder}\PM'
+
+        if os.path.exists(rf'{source_dir}\_Submittals\{folder}\PM'):
+            shutil.rmtree(rf'{source_dir}\_Submittals\{folder}\PM') 
+
         for file in os.listdir(file_path_pm):
             os.makedirs(to_dir_pm, exist_ok=True) 
             
